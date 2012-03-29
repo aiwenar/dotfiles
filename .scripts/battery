@@ -1,0 +1,23 @@
+#!/bin/zsh
+##
+# aiwenár - battery monitor
+
+if [ "$TERM" = "linux" ] ; then
+  BAT="BAT1"
+  function check_battery () {
+    local c=""
+    local s=$[`cat /sys/class/power_supply/$BAT/charge_now`*100/`cat /sys/class/power_supply/$BAT/charge_full`]
+    if [[ $s -gt 76 ]] ; then
+      c=$green
+    elif [[ $s -gt 30 ]] ; then
+      c=$yellow
+    else
+      c=$red
+    fi
+    batts="%{$c%}%{$s%}%{$resetc%} "
+  }
+else
+  function check_battery () {
+    batts=""
+  }
+fi
