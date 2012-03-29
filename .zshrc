@@ -21,6 +21,8 @@ autoload -U complist
 alias "gicl"="git clone"
 alias "gipl"="git pull"
 alias "gipu"="git push"
+alias "ghpl"="gipl github"
+alias "ghpu"="gipu github"
 alias "gico"="git commit"
 alias ll='ls -lh'
 alias la='ls -lha'
