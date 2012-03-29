@@ -49,10 +49,8 @@ setopt complete_in_word
 # battery information (TTYx)
 #
 
-if [[ $TERM = "linux" ]] ; then
-  POWER_SUPPLY="BAT1";
-  python3 ~/.scripts/battery.py &
-fi
+source ~/.scripts/battery
+check_battery
 
 #
 # ninja completion
@@ -94,6 +92,8 @@ function precmd {
     prompt=$red
   fi
 
+  check_battery
+
   cursor="%{$prompt%}>%{$resetc%}"
   vcs_info 'prompt'
 }
@@ -102,5 +102,5 @@ function precmd {
 # prompt
 #
 
-PROMPT="%{$green%}%n%{$resetc%} %{$cursor%}"'${vcs_info_msg_0_}${cursor}'" %{$resetc%}"
+PROMPT='${batts}'"%{$green%}%n%{$resetc%} %{$cursor%}"'${vcs_info_msg_0_}${cursor}'" %{$resetc%}"
 RPROMPT="%~"
