@@ -1,0 +1,7 @@
+#!/bin/zsh
+##
+# aiwenár - completion loading
+
+for i in ~/.scripts/completion.d/* ; do
+  source $i
+end
