@@ -5,10 +5,10 @@
 function check_battery () {
   batts=""
 }
-
+return
 if [ "$TERM" = "linux" ] ; then
   BAT="BAT1"
-  if [ -e "/sys/class/power_supply/$BAT" ] ; then
+  if [ -e "/sys/class/power_supply/$BAT" -a ! -e "/sys/class/power_supply/ADP*" ] ; then
     function check_battery () {
       local c=""
       local s=$[`cat /sys/class/power_supply/$BAT/charge_now`*100/`cat /sys/class/power_supply/$BAT/charge_full`]
