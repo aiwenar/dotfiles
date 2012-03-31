@@ -11,18 +11,19 @@
 if [ "$TERM" = "linux" ] ; then
   function batt_info ()
   {
+    local co
+    zstyle -a ':batt_info:adapter' 'color' co
     if [ `cat "/sys/class/power_supply/ADP$ADPN/online"` = 1 ] ; then
-      batt_info_msg="%{$yellow%}☇%{$resetc%} "
+      batt_info_msg="%{$co%}☇%{$resetc%} "
       return
     fi
     local st=$[`cat "/sys/class/power_supply/BAT$BATN/charge_now"`*100/`cat "/sys/class/power_supply/BAT$BATN/charge_full"`]
-    local co
     if [ $st > $BAT_L1 ] ; then
-      co=$green
+      zstyle -a ':batt_info:batt' 'level1' co
     elif [ $st > $BAT_L2 ] ; then
-      co=$yellow
+      zstyle -a ':batt_info:batt' 'level2' co
     else
-      co=$red
+      zstyle -a ':batt_info:batt' 'level3' co
     fi
     batt_info_msg="%{$co%}$st%{$resetc%} "
   }
