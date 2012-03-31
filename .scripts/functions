@@ -1,0 +1,32 @@
+#!/bin/zsh
+##
+# aiwenár - misc functions
+#
+
+#
+# extract any archive
+#
+
+function extr ()
+{
+  local n=${(L)1}
+  if [[ $n == *.tgz || $n == *.tbz || $n == *.tlz || $n == *.tar.* || $n == *.tar ]] ; then
+    tar xf $1
+  elif [[ $n == *.gz ]] ; then
+    gzip -d $1
+  elif [[ $n == *.bz || $n == *.bz2 ]] ; then
+    bzip2 -d $1
+  elif [[ $n == *.lzma ]] ; then
+    unlzma $1
+  elif [[ $n == *.xz ]] ; then
+    unxz $1
+  elif [[ $n == *.7z ]] ; then
+    7z x $1
+  elif [[ $n == *.zip ]] ; then
+    unzip $1
+  else
+    echo "$fg[red]error:$reset_color unknown archive type"
+    return 2
+  fi
+}
+
