@@ -1,25 +1,34 @@
 #!/bin/zsh
 ##
 # aiwenár - battery monitor
+# 
 
-function check_battery () {
-  batts=""
-}
-return
+(( ! $#BATN )) && BATN=1
+(( ! $#ADPN )) && ADPN=1
+(( ! $#BAT_L1 )) && BAT_L1=60
+(( ! $#BAT_L2 )) && BAT_L2=25
+
 if [ "$TERM" = "linux" ] ; then
-  BAT="BAT1"
-  if [ -e "/sys/class/power_supply/$BAT" -a ! -e "/sys/class/power_supply/ADP*" ] ; then
-    function check_battery () {
-      local c=""
-      local s=$[`cat /sys/class/power_supply/$BAT/charge_now`*100/`cat /sys/class/power_supply/$BAT/charge_full`]
-      if [[ $s -gt 76 ]] ; then
-        c=$green
-      elif [[ $s -gt 30 ]] ; then
-        c=$yellow
-      else
-        c=$red
-      fi
-      batts="%{$c%}%{$s%}%{$resetc%} "
-    }
-  fi
+  function batt_info ()
+  {
+    if [ `cat "/sys/class/power_supply/ADP$ADPN/online"` = 1 ] ; then
+      batt_info_msg="%{$yellow%}☇%{$resetc%} "
+      return
+    fi
+    local st=$[`cat "/sys/class/power_supply/BAT$BATN/charge_now"`*100/`cat "/sys/class/power_supply/BAT$BATN/charge_full"`]
+    local co
+    if [ $st > $BAT_L1 ] ; then
+      co=$green
+    elif [ $st > $BAT_L2 ] ; then
+      co=$yellow
+    else
+      co=$red
+    fi
+    batt_info_msg="%{$co%}$st%{$resetc%} "
+  }
+else
+  function batt_info ()
+  {
+    batt_info_msg=""
+  }
 fi
