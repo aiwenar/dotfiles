@@ -4,4 +4,4 @@
 
 for i in ~/.scripts/completion.d/* ; do
   source $i
-end
+done
