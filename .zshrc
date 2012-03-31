@@ -45,19 +45,14 @@ setopt prompt_subst
 setopt correct
 setopt hist_reduce_blanks
 setopt complete_in_word
+setopt multios            # multiple redirections
 
 #
-# battery information (TTYx)
+# various scripts
 #
 
-source ~/.scripts/battery
-check_battery
-
-#
-# ninja completion
-#
-
-source ~/Documents/sources/ninja/misc/zsh-completion
+source ~/.scripts/battery     # battery state (TTYx)
+source ~/.scripts/completion  # load completion files from ~/.scripts/completion.d
 
 #
 # colors
@@ -93,15 +88,14 @@ function precmd {
     prompt=$red
   fi
 
-  check_battery
-
   cursor="%{$prompt%}>%{$resetc%}"
   vcs_info 'prompt'
+  batt_info
 }
 
 #
 # prompt
 #
 
-PROMPT='${batts}'"%{$green%}%n%{$resetc%} %{$cursor%}"'${vcs_info_msg_0_}${cursor}'" %{$resetc%}"
+PROMPT='${batt_info_msg}'"%{$green%}%n%{$resetc%} %{$cursor%}"'${vcs_info_msg_0_}${cursor}'" %{$resetc%}"
 RPROMPT="%~"
