@@ -18,6 +18,8 @@ autoload -U complist
 # aliases
 #
 
+local CORE_COUNT=5 # for make
+
 alias "gclone"="git clone"
 alias "gpull"="git pull"
 alias "gpush"="git push"
@@ -27,6 +29,7 @@ alias "ghpu"="gpush origin master"
 alias "gcom"="git commit"
 alias ll='ls -lh'
 alias la='ls -lha'
+alias make="make -j $CORE_COUNT"
 
 #
 # history
@@ -53,6 +56,7 @@ setopt multios            # multiple redirections
 
 source ~/.scripts/battery     # battery state (TTYx)
 source ~/.scripts/completion  # load completion files from ~/.scripts/completion.d
+source ~/.scripts/functions   # misc functions
 
 #
 # colors
@@ -75,6 +79,11 @@ zstyle ':vcs_info:*:prompt:*' unstagedstr   "%{$green%}"
 zstyle ':vcs_info:*:prompt:*' actionformats "(%{$magenta%}%u%c%b)%{$resetc%} "
 zstyle ':vcs_info:*:prompt:*' formats       "%{$magenta%}%c%u(%c%b%c%u)%{$resetc%} "
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
+
+zstyle ':batt_info:adapter' color   "$yellow"
+zstyle ':batt_info:batt'    level1  "$green"
+zstyle ':batt_info:batt'    level2  "$yellow"
+zstyle ':batt_info:batt'    level3  "$red"
 
 function precmd {
   local last=$?
