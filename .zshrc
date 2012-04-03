@@ -13,6 +13,7 @@ autoload colors && colors
 autoload -Uz vcs_info
 autoload -U compinit && compinit
 autoload -U complist
+autoload -U zmv # zsh mv - mv with regex
 
 #
 # aliases
@@ -55,6 +56,7 @@ setopt correct
 setopt hist_reduce_blanks
 setopt complete_in_word
 setopt multios            # multiple redirections
+setopt sharehistory
 
 #
 # various scripts
