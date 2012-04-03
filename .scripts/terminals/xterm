@@ -1,0 +1,9 @@
+#!/bin/zsh
+##
+# aiwenár - zsh configuration for xterm's
+#
+
+bindkey '\e[2~'   overwrite-mode
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
