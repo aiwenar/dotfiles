@@ -7,7 +7,7 @@
 # extract any archive
 #
 
-function extr ()
+function unar ()
 {
   local n=${(L)1}
   if [[ $n == *.tgz || $n == *.tbz || $n == *.tlz || $n == *.tar.* || $n == *.tar ]] ; then
