@@ -32,6 +32,12 @@ alias la='ls -lha'
 alias make="make -j $CORE_COUNT"
 
 #
+# terminal - dependend stuff
+#
+
+if [[ -e ~/.scripts/terminals/$TERM ]] source ~/.scripts/terminals/$TERM
+
+#
 # history
 #
 
