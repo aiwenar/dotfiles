@@ -1,9 +1,9 @@
 " aiwenár - .vimrc
 
 " tabs and spaces
-set expandtab	" tab → spaces
-set ai 				" auto ident
-set si 				" smart ident
+set expandtab " tab → spaces
+set ai        " auto ident
+set si        " smart ident
 set smarttab
 set tabstop=2
 set shiftwidth=2
@@ -12,9 +12,9 @@ set shiftwidth=2
 
 set number
 set wildmenu
-set autoread	 	  " auto-read modified fikes
-set nocompatible	"
-set showmatch			" hilight matching braces
+set autoread      " auto-read modified fikes
+set nocompatible  "
+set showmatch     " hilight matching braces
 
 " better search
 set hlsearch
