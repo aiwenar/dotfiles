@@ -56,7 +56,7 @@ setopt correct
 setopt hist_reduce_blanks
 setopt complete_in_word
 setopt multios            # multiple redirections
-setopt sharehistory
+# setopt sharehistory
 
 #
 # various scripts
