@@ -6,6 +6,14 @@
 source ~/.profile
 
 #
+# local configuration
+#
+
+if [[ -e ~/.localrc ]] ; then
+  source ~/.localrc
+fi
+
+#
 # loads
 #
 
@@ -62,9 +70,16 @@ setopt multios            # multiple redirections
 # various scripts
 #
 
-source ~/.scripts/battery     # battery state (TTYx)
-source ~/.scripts/completion  # load completion files from ~/.scripts/completion.d
-source ~/.scripts/functions   # misc functions
+function loadext ()
+{
+  if [[ -e $1 ]] ; then
+    source $1
+  fi
+}
+
+loadext ~/.scripts/battery     # battery state (TTYx)
+loadext ~/.scripts/completion  # load completion files from ~/.scripts/completion.d
+loadext ~/.scripts/functions   # misc functions
 
 #
 # colors
