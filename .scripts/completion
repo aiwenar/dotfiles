@@ -2,6 +2,9 @@
 ##
 # aiwenár - completion loading
 
-for i in ~/.scripts/completion.d/* ; do
-  source $i
-done
+if [[ -e ~/.scripts/completion.d/ ]] ; then
+  for i in ~/.scripts/completion.d/* ; do
+    source $i
+  done
+fi
+
