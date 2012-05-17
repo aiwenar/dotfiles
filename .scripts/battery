@@ -4,7 +4,7 @@
 # 
 
 (( ! $#BATN )) && BATN=1
-(( ! $#ADPN )) && ADPN=1
+(( ! $#ADPN )) && ADPN="ADP0"
 (( ! $#BAT_L1 )) && BAT_L1=60
 (( ! $#BAT_L2 )) && BAT_L2=25
 
@@ -13,7 +13,7 @@ if [ "$TERM" = "linux" ] ; then
   {
     local co
     zstyle -a ':batt_info:adapter' 'color' co
-    if [ `cat "/sys/class/power_supply/ADP$ADPN/online"` = 1 ] ; then
+    if [ `cat "/sys/class/power_supply/$ADPN/online"` = 1 ] ; then
       batt_info_msg="%{$co%}☇%{$resetc%} "
       return
     fi
