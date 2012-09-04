@@ -7,26 +7,94 @@
 # extract any archive
 #
 
+#function unar ()
+#{
+#  local n=${(L)1}
+#  if [[ $n == *.tgz || $n == *.tbz || $n == *.tlz || $n == *.tar.* || $n == *.tar ]] ; then
+#    tar xf $1
+#  elif [[ $n == *.gz ]] ; then
+#    gzip -d $1
+#  elif [[ $n == *.bz || $n == *.bz2 ]] ; then
+#    bzip2 -d $1
+#  elif [[ $n == *.lzma ]] ; then
+#    unlzma $1
+#  elif [[ $n == *.xz ]] ; then
+#    unxz $1
+#  elif [[ $n == *.7z ]] ; then
+#    7z x $1
+#  elif [[ $n == *.zip ]] ; then
+#    unzip $1
+#  elif [[ $n == *.rar ]] ; then
+#    unrar x $1
+#  else
+#    echo "$fg[red]error:$reset_color unknown archive type"
+#    return 2
+#  fi
+#}
+
 function unar ()
 {
-  local n=${(L)1}
-  if [[ $n == *.tgz || $n == *.tbz || $n == *.tlz || $n == *.tar.* || $n == *.tar ]] ; then
-    tar xf $1
-  elif [[ $n == *.gz ]] ; then
-    gzip -d $1
-  elif [[ $n == *.bz || $n == *.bz2 ]] ; then
-    bzip2 -d $1
-  elif [[ $n == *.lzma ]] ; then
-    unlzma $1
-  elif [[ $n == *.xz ]] ; then
-    unxz $1
-  elif [[ $n == *.7z ]] ; then
-    7z x $1
-  elif [[ $n == *.zip ]] ; then
-    unzip $1
-  else
-    echo "$fg[red]error:$reset_color unknown archive type"
-    return 2
-  fi
+  temp=`getopt -o lh --long list,help -n 'unar' -- "$@"`
+  if [ $? != 0 ] ; then return 1 ; fi
+
+  local list=0
+  
+  eval set -- "$temp"
+  while [ $# -gt 0 ] ; do
+    case "$1" in
+      -h|--help)  echo "usage: unar [OPTION]... FILES...\n\noptions:\n  -h --help\tshow this screen and exit.\n  -l --list\tlist content of archive.\n" ; return 0 ;;
+      -l|--list)  list=1 ;;
+      --) shift ; break ;;
+    esac
+    shift
+  done
+
+  typeset -Ag lcmd cmd
+  lcmd=(
+    tar     -t
+    unzip   -l
+    unrar    l
+    7zr      l
+    unxz    -l
+    gzip    -l
+    unlzma  -l
+  )
+  cmd=(
+    tar    'xfv'
+    unzip  ''
+    unrar  'x'
+    7zr    'x'
+    unxz   ''
+    gzip   '-d'
+    bzip2  '-d'
+    unlzma ''
+  )
+  
+  for afile do
+    local type
+    case $afile in
+      *.tlz|*.tgz|*.tbz|*.tar|*.tar.*) type=tar ;;
+      *.zip)  type=unzip ;;
+      *.rar)  type=unrar ;;
+      *.7z)   type=7zr   ;;
+      *.xz)   type=unxz  ;;
+      *.lzma) type=unlzma;;
+      *.bz|*.bz2) type=bzip2;;
+      *.gz)   type=gzip  ;;
+    esac
+    if [ $list -eq 1 ] ; then
+      ($type $lcmd[$type] $afile)
+    else
+      ($type $cmd[$type] $afile)
+    fi
+  done
 }
 
+#
+# load jarfile with java
+#
+
+function jjar ()
+{
+  java -jar $1 $jar_flags
+}
