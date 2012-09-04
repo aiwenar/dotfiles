@@ -3,6 +3,7 @@
 # aiwenár - .zshrc
 #
 
+bindkey -e
 source ~/.profile
 
 #
@@ -27,7 +28,8 @@ autoload -U zmv # zsh mv - mv with regex
 # aliases
 #
 
-local CORE_COUNT=5 # for make
+# not override if defined in .localrc
+(( ! $#MAKE_TASKS_COUNT )) && MAKE_TASKS_COUNT=1
 
 alias "gclone"="git clone"
 alias "gpull"="git pull"
@@ -36,9 +38,10 @@ alias "gstat"="git status"
 alias "ghpl"="gpull origin master"
 alias "ghpu"="gpush origin master"
 alias "gcom"="git commit"
+alias ls='ls --color'
 alias ll='ls -lh'
 alias la='ls -lha'
-alias make="make -j $CORE_COUNT"
+alias make="make -j $MAKE_TASKS_COUNT"
 
 #
 # terminal - dependend stuff

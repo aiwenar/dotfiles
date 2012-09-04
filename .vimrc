@@ -37,3 +37,7 @@ set mouse=vin
 
 " syntax hilighting
 syntax enable
+
+" pathogen
+call pathogen#infect ()
+
