@@ -15,6 +15,12 @@ if [[ -e ~/.localrc ]] ; then
 fi
 
 #
+# python startup file
+#
+
+export PYTHONSTARTUP="/home/$USER/.startup.py"
+
+#
 # loads
 #
 
