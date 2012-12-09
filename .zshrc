@@ -50,7 +50,7 @@ alias la='ls -lha'
 alias make="make -j $MAKE_TASKS_COUNT"
 
 #
-# terminal - dependend stuff
+# terminal-dependend stuff
 #
 
 if [[ -e ~/.scripts/terminals/$TERM ]] source ~/.scripts/terminals/$TERM
