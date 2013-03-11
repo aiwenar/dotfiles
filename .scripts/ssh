@@ -1,0 +1,13 @@
+#!/bin/zsh
+##
+# aiwenár - ssh enchantments
+#
+
+function _zsh_ssh_init ()
+{
+  (( ! $#AZSH_STYLE )) && _SSH_NORMAL_STYLE='default'
+  (( ! $#_SSH_NORMAL_STYLE )) && _SSH_NORMAL_STYLE=$AZSH_STYLE
+  AZSH_STYLE=ssh
+}
+
+(( $#SSH_TTY )) && _zsh_ssh_init

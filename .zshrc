@@ -47,6 +47,7 @@ alias "gcom"="git commit"
 alias ls='ls --color'
 alias ll='ls -lh'
 alias la='ls -lha'
+alias grep='grep --colour=auto'
 alias make="make -j $MAKE_TASKS_COUNT"
 
 #
@@ -76,6 +77,15 @@ setopt multios            # multiple redirections
 # setopt sharehistory
 
 #
+# colors
+#
+
+green=$fg[green]
+yellow=$fg[yellow]
+red=$fg[red]
+magenta=$fg[magenta]
+
+#
 # various scripts
 #
 
@@ -89,54 +99,7 @@ function loadext ()
 loadext ~/.scripts/battery     # battery state (TTYx)
 loadext ~/.scripts/completion  # load completion files from ~/.scripts/completion.d
 loadext ~/.scripts/functions   # misc functions
+loadext ~/.scripts/ssh
+loadext ~/.scripts/zshstyle
+loadext ~/.scripts/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-#
-# colors
-#
-
-green=$fg[green]
-yellow=$fg[yellow]
-red=$fg[red]
-magenta=$fg[magenta]
-resetc=$reset_color
-
-#
-# prompt style
-#
-
-zstyle ':vcs_info:*:prompt:*'               enable git
-zstyle ':vcs_info:*:prompt:*'               check-for-changes true
-zstyle ':vcs_info:*:prompt:*' stagedstr     "%{$yellow%}"
-zstyle ':vcs_info:*:prompt:*' unstagedstr   "%{$green%}"
-zstyle ':vcs_info:*:prompt:*' actionformats "(%{$magenta%}%u%c%b)%{$resetc%} "
-zstyle ':vcs_info:*:prompt:*' formats       "%{$magenta%}%c%u(%c%b%c%u)%{$resetc%} "
-zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
-
-zstyle ':batt_info:adapter' color   "$yellow"
-zstyle ':batt_info:batt'    level1  "$green"
-zstyle ':batt_info:batt'    level2  "$yellow"
-zstyle ':batt_info:batt'    level3  "$red"
-
-function precmd {
-  local last=$?
-  local prompt=""
-
-  if [[ $last -eq 0 ]] ; then
-    prompt=$green
-  elif [[ $last -eq 1 ]] ; then
-    prompt=$yellow
-  else
-    prompt=$red
-  fi
-
-  cursor="%{$prompt%}>%{$resetc%}"
-  vcs_info 'prompt'
-  batt_info
-}
-
-#
-# prompt
-#
-
-PROMPT='${batt_info_msg}'"%{$green%}%n%{$resetc%} %{$cursor%}"'${vcs_info_msg_0_}${cursor}'" %{$resetc%}"
-RPROMPT="%~"

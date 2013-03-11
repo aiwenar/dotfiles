@@ -1,0 +1,14 @@
+#!/bin/zsh
+##
+# aiwenár - zsh styling
+#
+
+(( ! $#AZSH_STYLE )) && AZSH_STYLE='default'
+
+if [[ ! -e "$HOME/.scripts/styles/$AZSH_STYLE.zsh" ]] ; then
+  echo "warning: style $AZSH_STYLE does not exists"
+  AZSH_STYLE='default'
+fi
+
+source "$HOME/.scripts/styles/$AZSH_STYLE.zsh"
+
